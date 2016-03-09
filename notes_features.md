@@ -1,3 +1,5 @@
+[back to README](/README.md)
+
 Notes:
 
 	1. During run the program will save a file containing your settings, don't delete or modify this.
