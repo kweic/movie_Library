@@ -15,5 +15,7 @@ First time running:
 
 	1. Run program
 	2. Click Movie Setup > Set Movie Directory (choose the folder containing your movie files)
-	3. Click Movie Setup > Import My Movies (wait while program finds your files, cleans titles, determines movie / tv series)[*see notes #3](/notes_features.md)
-	4. Click Movie Setup > Download Covers & Info (this step needs an internet connection and patience)[*see notes #3](/notes_features.md)
+	3. Click Movie Setup > Import My Movies (wait while program finds your files, cleans titles, determines movie / tv series)*see notes #3
+	4. Click Movie Setup > Download Covers & Info (this step needs an internet connection and patience)*see notes #3
+	
+[*see notes #3](/notes_features.md)
