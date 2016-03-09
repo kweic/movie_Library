@@ -1,6 +1,6 @@
 This is a personal visual organizer for digitized movies with sorting options and automatic information and image downloading.
 See Features for more information.
-At this point (3.6.2016) the program still has many updates that I plan to implement.[* see Bugs and Planned Updates](movie_Library/bugs_updates.md)
+At this point (3.6.2016) the program still has many updates that I plan to implement.[* see Bugs and Planned Updates](/bugs_updates.md)
 
 Program by Kevin Weichel - KevinJWeichel@gmail.com
 Not for Resale
@@ -15,5 +15,5 @@ First time running:
 
 	1. Run program
 	2. Click Movie Setup > Set Movie Directory (choose the folder containing your movie files)
-	3. Click Movie Setup > Import My Movies (wait while program finds your files, cleans titles, determines movie / tv series)[*see notes #3](movie_Library/notes_features.md)
-	4. Click Movie Setup > Download Covers & Info (this step needs an internet connection and patience)[*see notes #3](movie_Library/notes_features.md)
+	3. Click Movie Setup > Import My Movies (wait while program finds your files, cleans titles, determines movie / tv series)[*see notes #3](/notes_features.md)
+	4. Click Movie Setup > Download Covers & Info (this step needs an internet connection and patience)[*see notes #3](/notes_features.md)
