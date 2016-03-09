@@ -1,3 +1,5 @@
+[Back to README](/README.md)
+
 Bugs and Planned Updates:
 
 	1. Add loading window with progress bar as first user experience (while images are loaded into program and set to user's preferred size)
