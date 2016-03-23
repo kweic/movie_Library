@@ -7,7 +7,6 @@ import MovieUILogic.MovieUISaver;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,7 +17,6 @@ public class MovieInterface extends javax.swing.JFrame {
 
     ArrayList<VideoFile> movieList = new ArrayList();
 
-//    String saveDirectory = "src/UIsaves";
     String saveDirectory = "/movie_UI/UI_saves";
     String imageSaveDirectory = "/images";
     String saveVideoFileName = "VideoFiles_UIsaver.kev";
@@ -28,8 +26,6 @@ public class MovieInterface extends javax.swing.JFrame {
     VideoFileLoaderSaver videoFileLoader;
     FileListGenerator sorter;
 
-//    int y = 0;
-//    int x = 0;
     int panelWidth;
     int panelHeight;
     boolean imagesLoaded = false;
@@ -47,16 +43,12 @@ public class MovieInterface extends javax.swing.JFrame {
     boolean videoFilesLoaded = false;
     boolean bufferedImagesLoaded = false;
     boolean UIunPaused = true;
-//    boolean sizingImages = false;
+
     String genreSelect;
     String sortOption;
     String fileDirectory = "Not Set";
     String searchTerm = "";
 
-    //int printLoop = 0;
-    /**
-     * Creates new form MovieInterface
-     */
     public MovieInterface() {
 
         UIsaver.loadState(saveVideoFileName);
@@ -73,16 +65,13 @@ public class MovieInterface extends javax.swing.JFrame {
         initComponents();
 
         jScrollPaneDisplay.getVerticalScrollBar().setUnitIncrement(16);
-//2-23        loadImages();
-//2-23        runUICode();
-//2-23        genresBoxCheck();
+
         panelWidth = jScrollPaneDisplay.getWidth();
         jSliderImageSize.setVisible(false);
         jButtonSaveSize.setVisible(false);
         jPanel1.setBackground(Color.GRAY);
         jScrollPaneDisplay.setBackground(Color.RED);
-//2-23        paintUIBG();
-//2-23        sortingCheck();
+
         if (fileLoader.checkForVideoFileSave(fileDirectory, saveVideoFileName)) {
             System.out.println("saved video file found.");
             loadVideoFiles(saveVideoFileName);
@@ -90,7 +79,7 @@ public class MovieInterface extends javax.swing.JFrame {
         } else {
             System.out.println("save not found");
         }
-//2-24 saving genre at startup so I can see if it is changed        
+     
         genreSelect = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
         sortOption = jComboBoxSorter.getItemAt(jComboBoxSorter.getSelectedIndex());
         startUIProgram();
@@ -423,9 +412,7 @@ public class MovieInterface extends javax.swing.JFrame {
         jScrollPaneDisplay.setBackground(Color.RED);
     }
 
-    //public void ImageMouseListener(){
-    //    System.out.println("clicked");
-    //}    
+   
     public void prepareJPanelPrep() {
         jPanelPrep.setPreferredSize(new Dimension(jScrollPaneDisplay.getWidth(), jScrollPaneDisplay.getHeight()));
         jPanelPrep.setSize(jScrollPaneDisplay.getWidth(), jScrollPaneDisplay.getHeight());
@@ -486,11 +473,11 @@ public class MovieInterface extends javax.swing.JFrame {
     public void createYearLabel(VideoFile file, int height, int yearLocY, int x, int y) {
         if (yearView && !editEnabled) {
             JLabel yearLabel = new JLabel();
-            //  if (yearView && !editEnabled) {
+
             yearLabel.setText(file.getYear() + "");
             yearLabel.setForeground(Color.WHITE);
             yearLabel.setBounds(0, 0, 100, 100);
-            //   }
+
             yearLabel.setLocation(x, y + height - yearLocY);
             jPanelPrep.add(yearLabel);
         }
@@ -499,13 +486,12 @@ public class MovieInterface extends javax.swing.JFrame {
     public void createTitleLabel(VideoFile file, int height, int titleLocation, int x, int y) {
         if (titleView && !editEnabled) {
             JLabel titleLabel = new JLabel();
-            //        if (titleView && !editEnabled) {
-            //System.out.println("file title: " + file.getTitle());
+
             titleLabel.setText(file.getTitle());
             //titleLabel.setFont(BOLD);
             titleLabel.setForeground(Color.WHITE);
             titleLabel.setBounds(0, 0, 150, 100);
-            //        }
+
             titleLabel.setLocation(x, y + height - titleLocation);
             jPanelPrep.add(titleLabel);
         }
@@ -514,11 +500,11 @@ public class MovieInterface extends javax.swing.JFrame {
     public void createRatingLabel(VideoFile file, int height, int width, int ratingLocX, int ratingLocY, int x, int y) {
         if (ratingView && !editEnabled) {
             JLabel ratingLabel = new JLabel();
-            //    if (ratingView && !editEnabled) {
+
             ratingLabel.setText(file.getRating() + "");
             ratingLabel.setForeground(Color.WHITE);
             ratingLabel.setBounds(0, 0, 100, 100);
-            //    }
+
             ratingLabel.setLocation(x + width - ratingLocX, y + height - ratingLocY);
             jPanelPrep.add(ratingLabel);
         }
@@ -527,11 +513,11 @@ public class MovieInterface extends javax.swing.JFrame {
     public void createViewCountLabel(VideoFile file, int height, int width, int viewsLocX, int viewsLocY, int x, int y) {
         if (viewCountView && !editEnabled) {
             JLabel viewsLabel = new JLabel();
-            //      if (viewCountView && !editEnabled) {
+
             viewsLabel.setText(file.getPlaycount() + "");
             viewsLabel.setForeground(Color.WHITE);
             viewsLabel.setBounds(0, 0, 100, 100);
-            //     }
+
             viewsLabel.setLocation(x + width - viewsLocX, y + height - viewsLocY);
             jPanelPrep.add(viewsLabel);
         }
@@ -547,7 +533,6 @@ public class MovieInterface extends javax.swing.JFrame {
             for (VideoFile movie : movieList) {
                 if (!movie.getHasListener()) {
                     ImageClicker clickImage = new ImageClicker(fileDirectory, movie);
-                    //     System.out.println("listener for: " + movie.getTitle());
                     clickImage.addListener(movie.getCover());
                     movie.setHasListener();
 
@@ -595,12 +580,9 @@ public class MovieInterface extends javax.swing.JFrame {
         }
     }
 
-    //public void printUI(ArrayList<String> videofiles, double imageScale) {
     public void printUI() {
         System.out.println("UI Code Started.");
         if (UIunPaused) {
-            //System.out.println("trying to print, size: " + movieList.size());
-            //int space = 20; //20
 
             if (!imagesLoaded) {
                 sizeImages();
@@ -632,54 +614,24 @@ public class MovieInterface extends javax.swing.JFrame {
             int viewsLocY = setViewsLocY();
 
             prepareJPanelPrep();
-            //JPanel jPanelDisplay = new JPanel();
-            //jPanelDisplay.setPreferredSize(new Dimension(jScrollPaneDisplay.getWidth(), jScrollPaneDisplay.getHeight()));
-            //jPanelDisplay.setSize(jScrollPaneDisplay.getWidth(), jScrollPaneDisplay.getHeight());
-            //System.out.println("width set to: " + jScrollPaneDisplay.getWidth());
-//2-23        ImageIcon sizedIcon;
-            int y = space;
-            //System.out.println(Jframe);
 
-            //for (String fileName : videofiles) {
+            int y = space;
+
             for (VideoFile file : movieList) {
-                //   System.out.println("file has image: " + file.getHasImage());
                 if (imageSizer && printCount > 1) {
                     System.out.println("image Sizer On, printCount exceeded");
                     break;
                 }
                 if (file.getTitle().toLowerCase().contains(searchTerm.toLowerCase())) {
 
-                    // System.out.println("attempting: " + file);
-                    //sizedIcon = fileLoader.loadImage("src/images/" + fileName + ".jpg", imageScale);
-                    /*2-23
-                if (!imagesLoaded) {
-                    System.out.println("loading new image for: " + file.getTitle());
-                    sizedIcon = fileLoader.loadImage(file, imageScale);
-
-                    //sizedIcon = fileLoader.returnImage(file.getPath(), imageScale);
-                } else {
-                    sizedIcon = fileLoader.returnImage(file, imageScale);
-                }
-                     */
-                    //               i++;
-                    //movie / series selection
                     if (displaySeriesOrMovies(file)) {
                         if (displayThisGenre(file)) {
 
-//2-23                        height = sizedIcon.getIconHeight() + (int) (sizedIcon.getIconHeight() * .1);
-//2-23                        width = sizedIcon.getIconWidth();
-                            //String title = printLoop + "";
                             JLabel cover;
 
-//2-23                        ImageClicker clickImage = new ImageClicker(fileDirectory, file);
-//2-23                        clickImage.addListener(cover);
-//2-23                        cover.setBounds(0, 0, width, height);
-                            //yearLabel here
                             int imagesAcross = jPanelPrep.getWidth() / width;
-                            //int gapSpacer = (jPanelPrep.getWidth() - (imagesAcross * width)) / (imagesAcross + 1);
                             int gapSpacer = setGapSpacer(imagesAcross, width);
 
-//2-23                        cover.setSize(width, height);
                             x += gapSpacer;
 
                             //override space to be the same as gapSpacer for minimalist even layout
@@ -706,7 +658,6 @@ public class MovieInterface extends javax.swing.JFrame {
                             createRatingLabel(file, height, width, ratingLocX, ratingLocY, x, y);
                             createViewCountLabel(file, height, width, viewsLocX, viewsLocY, x, y);
 
-//2-23                        cover.setLocation(x, y);
                             cover = file.getCover();
                             cover.setLocation(x, y);
                             x += width;
@@ -720,13 +671,9 @@ public class MovieInterface extends javax.swing.JFrame {
             }
 
             paintUIBG();
-            //System.out.println("rowCount: " + rowCount);
-            // if (rowCount < 1) {
-            //     jPanel2.setPreferredSize(new Dimension(jPanel2.getWidth(), jScrollPaneDisplay.getHeight()));
-            //} else {
+            
             jPanelPrep.setPreferredSize(new Dimension(jPanelPrep.getWidth(), ((height + space) * (rowCount + 1)) + 40));
-            // }
-            //System.out.println("height: " + height + " space: " + space + " rowcount: " + rowCount);
+
             fillScrollPane(jPanelPrep);
             setDisplayLabel(printCount);
 
@@ -746,8 +693,6 @@ public class MovieInterface extends javax.swing.JFrame {
     private void jScrollPaneDisplayComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jScrollPaneDisplayComponentResized
         //actions for Resize
         //sends new panelWidth and recalcualtes layout
-        //System.out.println("resized");
-        //System.out.println("panel width: " + panelWidth);
         if (jScrollPaneDisplay.getWidth() > panelWidth + 20 || jScrollPaneDisplay.getWidth() < panelWidth - 20) {
             panelWidth = jScrollPaneDisplay.getWidth();
             System.out.println("Calling RUN UI from Resized");
@@ -756,9 +701,7 @@ public class MovieInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jScrollPaneDisplayComponentResized
 
     private void jMenuItemSetImageSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSetImageSizeActionPerformed
-        // TODO add your handling code here:
         imageSizer = true;
-        //  sizingImages = true;
         imageSizer();
     }//GEN-LAST:event_jMenuItemSetImageSizeActionPerformed
 
@@ -770,30 +713,25 @@ public class MovieInterface extends javax.swing.JFrame {
     }
     private void jButtonSaveSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveSizeActionPerformed
         //Save Size from slider bar, hide bar and button
-
         imageSizer = false;
         imageSizer();
 
         imageScale = (((jSliderImageSize.getValue() + 50) * 1.00) / 100);
         UIsaver.setImageScale(imageScale);
         UIsaver.saveUIState(saveVideoFileName);
-        //   sizingImages = false;
+
         imagesLoaded = false;
         System.out.println("Calling RUN UI from save size");
         runUICode();
-        //System.out.println("image scale: " + imageScale);
     }//GEN-LAST:event_jButtonSaveSizeActionPerformed
 
     private void jSliderImageSizeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderImageSizeStateChanged
-        // TODO add your handling code here:
-
         if (((jSliderImageSize.getValue() + 50) * 1.00) / 100 > imageScale + .02 || ((jSliderImageSize.getValue() + 50) * 1.00) / 100 < imageScale - .02) {
             imageScale = (jSliderImageSize.getValue() + 50) * 1.00 / 100;
             System.out.println("changed: " + imageScale);
-            // sizeImages();
 
             imagesLoaded = false;
-            // sizingImages = true;
+
             System.out.println("RUN UI from Image Slider");
             runUICode();
         }
@@ -814,17 +752,14 @@ public class MovieInterface extends javax.swing.JFrame {
                 fileLoader.clearStoredLists();
                 System.out.println("list cleared size: " + movieList.size());
                 fileDirectory = chooser.getSelectedFile().toString();
-                //System.out.println("directory: " + fileDirectory);
-                //System.out.println("get current directory: "+chooser.getCurrentDirectory());
-                //System.out.println("current file: "+chooser.getSelectedFile());
+
                 UIsaver.setDirectory(fileDirectory);
                 videoFileLoader.setNewPathName(fileDirectory);
                 loadVideoFiles(saveVideoFileName);
-                //  loadImages();
-//            videoFilePopulate();
+
                 UIsaver.saveUIState(saveVideoFileName);
                 System.out.println("Calling RUN UI from directory pick");
-                // runUICode();
+
             }
         } else {
             //System.out.println("no selection");
@@ -863,14 +798,12 @@ public class MovieInterface extends javax.swing.JFrame {
         } else {
             genreSort = true;
             genreSelect = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
-            //System.out.println("genre set to: " + genreSelect);
             movieView = true;
             seriesView = false;
         }
 
     }
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
         String genrePrevious = genreSelect;
         genresBoxCheck();
 
@@ -887,7 +820,6 @@ public class MovieInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jCheckBoxMenuGenresViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuGenresViewActionPerformed
-        // TODO add your handling code here:
         UIsaver.setGenresView(jCheckBoxMenuGenresView.getState());
         UIsaver.saveUIState(saveVideoFileName);
         System.out.println("RUN UI from genres View");
@@ -895,7 +827,6 @@ public class MovieInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxMenuGenresViewActionPerformed
 
     private void jCheckBoxMenuPlayCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuPlayCountActionPerformed
-        // TODO add your handling code here:
         UIsaver.setPlayCountView(jCheckBoxMenuPlayCount.getState());
         UIsaver.saveUIState(saveVideoFileName);
         viewCountView = jCheckBoxMenuPlayCount.getState();
@@ -904,7 +835,6 @@ public class MovieInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxMenuPlayCountActionPerformed
 
     private void jCheckBoxMenuRatingViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuRatingViewActionPerformed
-        // TODO add your handling code here:
         UIsaver.setRatingsView(jCheckBoxMenuRatingView.getState());
         UIsaver.saveUIState(saveVideoFileName);
         ratingView = jCheckBoxMenuRatingView.getState();
@@ -913,7 +843,6 @@ public class MovieInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxMenuRatingViewActionPerformed
 
     private void jCheckBoxMenuYearsViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuYearsViewActionPerformed
-        // TODO add your handling code here:
         UIsaver.setYearView(jCheckBoxMenuYearsView.getState());
         UIsaver.saveUIState(saveVideoFileName);
         yearView = jCheckBoxMenuYearsView.getState();
@@ -922,7 +851,6 @@ public class MovieInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxMenuYearsViewActionPerformed
 
     private void jCheckBoxMenuTitlesViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuTitlesViewActionPerformed
-        // TODO add your handling code here:
         UIsaver.setTitleView(jCheckBoxMenuTitlesView.getState());
         UIsaver.saveUIState(saveVideoFileName);
 
@@ -932,16 +860,13 @@ public class MovieInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxMenuTitlesViewActionPerformed
 
     private void videoFilePopulate() {
-        //FileLoader loader = new FileLoader();
         if (!fileLoader.checkForVideoFileSave(fileDirectory, saveVideoFileName)) { // if the save file doesn't exist
             movieList = fileLoader.gatherFiles(fileDirectory);
             System.out.println("movieList size: " + movieList.size());
 
             videoFileLoader.saveVideoFiles(movieList, saveVideoFileName, fileDirectory);
         } else { //the save file does exist
-            //movieList = videoFileLoader.loadVideoFiles(saveVideoFileName);
             //add code here to clear temporary images
-
             movieList = fileLoader.updateGatherFiles(fileDirectory, movieList);
             imagesLoaded = false;
             System.out.println("Already A VideoFile, not implemented in VideoFilePopulate");
@@ -949,7 +874,6 @@ public class MovieInterface extends javax.swing.JFrame {
     }
 
     public void loadVideoFiles(String fileName) {
-
         movieList = videoFileLoader.loadVideoFiles(fileName);
         videoFilesLoaded = true;
         System.out.println("loaded VideoFile, size: " + movieList.size());
@@ -960,9 +884,6 @@ public class MovieInterface extends javax.swing.JFrame {
         if (!fileDirectory.equals("Not Set")) { //if the directory is set, search it for video files
             fileLoader.setDirectory(fileDirectory);
             videoFilePopulate();
-            // for (VideoFile movie : movieList) {
-            //     System.out.println(movie.getTitle());
-            //}
             loadImages();
             System.out.println("calling RUN UI from jMenuUpdateDataActionPerformed");
             UIunPaused = true;
@@ -995,7 +916,6 @@ public class MovieInterface extends javax.swing.JFrame {
         loadImages();
         runUICode();
 
-
     }//GEN-LAST:event_jMenuDownloadDataActionPerformed
 
     private void sortingCheck() {
@@ -1003,21 +923,16 @@ public class MovieInterface extends javax.swing.JFrame {
             System.out.println("Calling RUN UI from sortingCheck");
             if (jComboBoxSorter.getItemAt(jComboBoxSorter.getSelectedIndex()).equals("Rating")) {
                 movieList = sorter.sortRating(movieList);
-                //  runUICode();
             } else if (jComboBoxSorter.getItemAt(jComboBoxSorter.getSelectedIndex()).equals("Title")) {
                 movieList = sorter.lexicoSort(movieList);
-                //   runUICode();
             } else if (jComboBoxSorter.getItemAt(jComboBoxSorter.getSelectedIndex()).equals("Year")) {
                 movieList = sorter.sortYear(movieList);
-                //   runUICode();
             } else if (jComboBoxSorter.getItemAt(jComboBoxSorter.getSelectedIndex()).equals("Views")) {
                 movieList = sorter.sortViews(movieList);
-                //   runUICode();
             }
         }
     }
     private void jComboBoxSorterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSorterActionPerformed
-        // TODO add your handling code here:
         sortingCheck();
 //2-24 make it only runUI if it's changed   
         if (!sortOption.equals(jComboBoxSorter.getItemAt(jComboBoxSorter.getSelectedIndex()))) {

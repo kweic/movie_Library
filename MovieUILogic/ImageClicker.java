@@ -11,19 +11,14 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import javax.swing.JLabel;
 
-/**
- *
- * @author kw
- */
+
 public class ImageClicker {
 
     private VideoFile videoFile;
- //   private JLabel label;
     private String directory;
 
     public ImageClicker(String directory, VideoFile videoFile) {
         this.directory = directory;
-       // this.label = label;
         this.videoFile = videoFile;
     }
 
@@ -44,28 +39,11 @@ public class ImageClicker {
     }
 
     public void openFile() {
-        //File f = new File(message);
-        //Desktop.open(f);
-        try{
-        Desktop.getDesktop().open(new File(directory+""+videoFile.getPath()));
-        }catch(Exception e){
-            
-        }
-    }
-/*
-    public void sizeUpLabel() {
-        label.setSize(label.getWidth() + 10, label.getHeight() + 10);
-    }
-
-    public void resizeOnClick() {
-
-        label.setSize(label.getWidth() - 10, label.getHeight() - 10);
         try {
-            Thread.sleep(1000);
+            Desktop.getDesktop().open(new File(directory + "" + videoFile.getPath()));
         } catch (Exception e) {
 
         }
-
     }
-*/
+
 }

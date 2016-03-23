@@ -67,7 +67,6 @@ public class FileNameCleaner {
     public boolean possibleTitle(String input) {
         //check if the input could have a title in it
         //System.out.println("checking for possible title: " + input);
-        //String checkTitle = input;
         String checkTitle = removeFileFormat(input);
         checkTitle = doExcludes(checkTitle);
 
@@ -94,7 +93,6 @@ public class FileNameCleaner {
         } else {
             System.out.println("getting parent of: " + filePath);
             preClean = getParentFolder(filePath);
-//            preClean = filePath;
             //System.out.println("   checking parent: "+preClean);
             preClean = doExcludes(preClean);
             preClean = cleanString(preClean);
@@ -172,7 +170,6 @@ public class FileNameCleaner {
     public int getYear(String input) {
         //goes through combinations of 4 characters looking for a year
         //starts far enough that titles like "2001 space oddysy" wont be broken
-
         for (int i = 3; i < input.length() - 4; i++) {
             //System.out.println("checking for year: " + input.substring(i, i + 4));
             if (checkYear(input.substring(i, i + 4))) {

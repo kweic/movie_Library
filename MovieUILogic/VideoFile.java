@@ -62,7 +62,7 @@ public class VideoFile implements Comparable<VideoFile>{
         cover = new JLabel(getImageIcon());
         cover.setBounds(0, 0, width, height);
         cover.setSize(width, height);
-        hasListener = false;
+        hasListener = false;       
     }
     
     public void setHasListener(){

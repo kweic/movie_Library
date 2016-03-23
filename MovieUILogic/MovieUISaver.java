@@ -1,21 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package MovieUILogic;
 
-import MovieUILogic.MovieGenre;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**
- *
- * @author kw
- */
 public class MovieUISaver {
 
     //Methods that will make it possible to save:
@@ -197,7 +188,6 @@ public class MovieUISaver {
         //save order to read
         //1 Directory to save VideoFile objects
         //image scale
-        //
 
         directory = loadedFile.get(0);
 

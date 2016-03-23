@@ -33,7 +33,6 @@ public class MovieOrSeriesClassifier {
         //spit out S00E00 length parts of string
         //return false if not a movie
         //return true if it gets past the tests
-        //true == isMovie
 
         int decrease = 2;
         //lengths
@@ -54,31 +53,6 @@ public class MovieOrSeriesClassifier {
             decrease+=4;
         }
         //spit out S0E00 length
-        /*
-        for (int i = 0; i < lcFile.length() - 5; i++) {
-            if (checkPiece(lcFile.substring(i, i + 5))) {
-                System.out.println(lcFile.substring(i, i + 5));
-                System.out.println("     returning True");
-                return false;
-            }
-        }
-        //spit out S0E0 length
-        for (int i = 0; i < lcFile.length() - 4; i++) {
-            if (checkPiece(lcFile.substring(i, i + 4))) {
-                System.out.println(lcFile.substring(i, i + 4));
-                System.out.println("    returning True");
-                return false;
-            }
-        }
-        for (int i = 0; i < lcFile.length() - 3; i++) {
-            if (checkPiece(lcFile.substring(i, i + 3))) {
-                System.out.println(lcFile.substring(i, i + 3));
-                System.out.println("    returning True");
-                return false;
-            }
-        }
-         */
-        //System.out.println("   returning False");
         return true;
     }
 

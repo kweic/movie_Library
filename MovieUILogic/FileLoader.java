@@ -218,11 +218,7 @@ public class FileLoader {
     }
 
     public void loadImage(VideoFile file) {
-//2-23    public ImageIcon loadImage(VideoFile file, double imageScale) {
         System.out.println("FileLoader, LoadImage " + file.getTitle());
-        //  this.imageScale = imageScale; //saves Image Scale for faster reload when not resizing
-        //System.out.println("trying to load: "+fileName);
-//        String path = "src/images/";
         String path = absolutePath + "/images";
 
         if (!imageDirectoryFound) {
@@ -230,8 +226,6 @@ public class FileLoader {
                 System.out.println("making new directory: " + path);
                 new File(path).mkdirs();
                 placeBlankImage();
-
-                //put blank image file in this folder
             }
         }
         imageDirectoryFound = true;
@@ -258,32 +252,8 @@ public class FileLoader {
                 System.out.println("No image and no blank");
             }
         }
-
-        //ImageOrganizer currentImage = new ImageOrganizer(fileName.getPath());
-        //currentImage.setBufferedImage(img);
-        //imageIconList.add(resizedIcon);
-        //currentImage.setImageIcon(resizedIcon);
-        //imageOrganizerList.add(currentImage); //save to list for fast reloading for sizes / spaces / display setting changes
-        //addOrUpdateImageSet(currentImage);
-        //System.out.println("Image org list size: " + imageOrganizerList.size());
-//2-23        return resizedIcon;
     }
 
-    /* 2-22
-    public void addOrUpdateImageSet(ImageOrganizer imageSet) {
-        //doesn't let ImageOrganizer's get duplicated
-        for (ImageOrganizer fileSet : imageOrganizerList) {
-            //if(fileSet.getPathName().trim().equals(imageSet.getPathName().trim())){
-//            if (fileCleaner.getFileWithParent(fileSet.getPathName()).equals(fileCleaner.getFileWithParent(imageSet.getPathName()))) {
-            if (fileSet.getPathName().equals(imageSet.getPathName())) {
-                fileSet.setBufferedImage(imageSet.getBufferedImage());
-                fileSet.setImageIcon(imageSet.getImageIcon());
-                return;
-            }
-        }
-        imageOrganizerList.add(imageSet); //if it's not found add it
-    }
-     */
     public void saveImage(String fileLink) {
         System.out.println("saveImage: " + fileLink);
         try {
@@ -326,17 +296,6 @@ public class FileLoader {
         return file.getImageIcon();
     }
 
-    /*2-22
-    public ImageOrganizer findFile(String pathName) {
-        for (ImageOrganizer set : imageOrganizerList) {
-//            if (fileCleaner.getFileWithParent(set.getPathName()).equals(fileCleaner.getFileWithParent(pathName))) {
-            if (set.getPathName().equals(pathName)) {
-                return set;
-            }
-        }
-        return null;
-    }
-     */
     public boolean fileCheck(String fileName) {
         //check if it's what I want
         // .mp4, .mkv, .avi, !.jpg,
@@ -359,9 +318,6 @@ public class FileLoader {
             }
         }
 
-        //if(fileName.contains(".mp4")||fileName.contains(".mkv")||fileName.contains(".avi") & !fileName.contains(".jpg")){
-        //     return true;
-        //    }
         return check;
     }
 }

@@ -93,7 +93,6 @@ public class IMDB_Miner {
     }
 
     public void getGenresDate(String imdbLink, VideoFile videoFile) {
-        //ArrayList<MovieGenre> genres = new ArrayList();
         String pageLink = "http://www.imdb.com/" + imdbLink;
         //System.out.println("pageLink " + pageLink);
 
@@ -105,7 +104,6 @@ public class IMDB_Miner {
             String inputLine = "";
             boolean run = true;
             int genreFound = 0;
-            //Scanner reader = new Scanner(inputLine);
             while (run && (inputLine = in.readLine()) != null) {
 
                 if (inputLine.contains("/genre/") || inputLine.contains("release") || inputLine.contains("/year/") || inputLine.contains("based on")) {
@@ -116,14 +114,7 @@ public class IMDB_Miner {
                         if (currentLine.contains("/genre/")) {
                             //System.out.println(currentLine);
                             videoFile.addGenre(genreChecker(currentLine));
-                            //genres.add(genreChecker(currentLine));
                             genreFound++;
-                            //currentLine = currentLine.substring(5, currentLine.length() - 1); //trims the html from the filename
-                            //in.close();
-                            //reader.close();
-
-                            //return resizeImageURL(currentLine, sizeFactor);
-                            //break;
                         } else if (currentLine.contains("release") && genreFound > 1) {
                             //System.out.println("  quitting");
                             reader.close();
@@ -161,12 +152,6 @@ public class IMDB_Miner {
     }
 
     public void downloadDvdCoverAndData(int sizeFactor, VideoFile videoFile) {
-        //String yearS;
-        //if (year == 0) {
-        //    yearS = "";
-        //} else {
-        //    yearS = year + "";
-        //}
         this.saveLink = videoFile.getTitle() + ".jpg";
         this.sizeFactor = sizeFactor;
         if (!videoFile.getHasImage()) {
@@ -175,8 +160,6 @@ public class IMDB_Miner {
         } else {
             branchLinks(videoFile);
         }
-
-        //branchLinks(title, videoFile);
     }
 
     public String getSaveLink() {
@@ -194,8 +177,8 @@ public class IMDB_Miner {
             URL imdb = new URL(imdbSearch);
             BufferedReader in = new BufferedReader(new InputStreamReader(imdb.openStream()));
 
-            String inputLine = "";
-            //Scanner reader = new Scanner(inputLine);
+            String inputLine;
+
             boolean linkFound = false;
             while ((inputLine = in.readLine()) != null) {
 
@@ -287,18 +270,4 @@ public class IMDB_Miner {
         }
 
     }
-
-    /*
-    public void saveImage(String imageDirectory, String fileLink) {
-        System.out.println("saving from imdb to: "+imageDirectory+""+fileLink);
-        try {
-            BufferedImage bi = getImage(fileLink);
-            File outputfile = new File(saveLink);
-            ImageIO.write(bi, "jpg", outputfile);
-            System.out.println("saved image: " + fileLink);
-        } catch (IOException e) {
-            System.out.println("save image failed");
-        }
-    }
-     */
 }
