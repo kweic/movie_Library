@@ -47,18 +47,25 @@ public class FileListGenerator {
         int currentHighYear = 0;
         VideoFile currentHighest = list.get(0);
         ArrayList<VideoFile> sortedByYear = new ArrayList();
-        while (sortedByYear.size() != list.size()) {
+        boolean allZeroes = false;
+        while (!allZeroes && sortedByYear.size() != list.size()) {
             currentHighYear = 0;
-            for (VideoFile movie : list) {
-
-                if ((movie.getYear() >= currentHighYear) && !sortedByYear.contains(movie)) {
+            allZeroes = true;
+            for (VideoFile movie : list) { //go through and add all the highest years first
+                if ((movie.getYear() != 0 && movie.getYear() >= currentHighYear) && !sortedByYear.contains(movie)) {
+                    allZeroes = false;
                     currentHighest = movie;
                     currentHighYear = movie.getYear();
-                    //System.out.println("new highest: " + currentHighest.getTitle() + " " + currentHighest.getYear());
+                    System.out.println("new highest: " + currentHighest.getTitle() + " " + currentHighest.getYear());
                 }
             }
-            //System.out.println("highest added.");
             sortedByYear.add(currentHighest);
+        }
+        
+        for(VideoFile movie: list){ //add all remaining zeroes in quickly
+            if(!sortedByYear.contains(movie)){
+                sortedByYear.add(movie);
+            }
         }
         return sortedByYear;
     }
