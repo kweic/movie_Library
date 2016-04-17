@@ -21,26 +21,34 @@ public class FileListGenerator {
     public ArrayList<VideoFile> sortRating(ArrayList<VideoFile> list) {
         //saves highest rating checking through the whole list, adds it to new list if it's the highest
         double currentHighRating = -1;
-        
-            VideoFile currentHighest = list.get(0);
-            ArrayList<VideoFile> sortedByRating = new ArrayList();
-            while (sortedByRating.size() != list.size()) {
-                //currentHighest = list.get(0);
-                currentHighRating = -1;
-                for (VideoFile movie : list) {
 
-                    if ((movie.getRating() >= currentHighRating) && !sortedByRating.contains(movie)) {
-                        currentHighest = movie;
-                        currentHighRating = movie.getRating();
-                        //System.out.println("new highest: " + currentHighest.getTitle() + " " + currentHighest.getRating());
-                    }
+        VideoFile currentHighest = list.get(0);
+        ArrayList<VideoFile> sortedByRating = new ArrayList();
+        boolean allZeroRating = false;
+        while (!allZeroRating && sortedByRating.size() != list.size()) {
+            //currentHighest = list.get(0);
+            currentHighRating = -1;
+            allZeroRating = true;
+            for (VideoFile movie : list) {
+                if (movie.getRating() != 0 && movie.getRating() > currentHighRating && !sortedByRating.contains(movie)) {
+                    allZeroRating = false;
+                    currentHighest = movie;
+                    currentHighRating = movie.getRating();
+                    System.out.println("new highest: " + currentHighest.getTitle() + " " + currentHighest.getRating());
                 }
-                //System.out.println("highest added.");
-                sortedByRating.add(currentHighest);
             }
+            //System.out.println("highest added.");
+            sortedByRating.add(currentHighest);
+        }
 
-            return sortedByRating;
-        
+        for (VideoFile movie : list) { //quickly add remaining unsorted movies
+            if (!sortedByRating.contains(movie)) {
+                sortedByRating.add(movie);
+            }
+        }
+
+        return sortedByRating;
+
     }
 
     public ArrayList<VideoFile> sortYear(ArrayList<VideoFile> list) {
@@ -52,7 +60,7 @@ public class FileListGenerator {
             currentHighYear = 0;
             allZeroes = true;
             for (VideoFile movie : list) { //go through and add all the highest years first
-                if ((movie.getYear() != 0 && movie.getYear() >= currentHighYear) && !sortedByYear.contains(movie)) {
+                if ((movie.getYear() != 0 && movie.getYear() > currentHighYear) && !sortedByYear.contains(movie)) {
                     allZeroes = false;
                     currentHighest = movie;
                     currentHighYear = movie.getYear();
@@ -61,9 +69,9 @@ public class FileListGenerator {
             }
             sortedByYear.add(currentHighest);
         }
-        
-        for(VideoFile movie: list){ //add all remaining zeroes in quickly
-            if(!sortedByYear.contains(movie)){
+
+        for (VideoFile movie : list) { //add all remaining zeroes in quickly
+            if (!sortedByYear.contains(movie)) {
                 sortedByYear.add(movie);
             }
         }
