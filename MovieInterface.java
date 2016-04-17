@@ -586,7 +586,6 @@ public class MovieInterface extends javax.swing.JFrame {
 
             if (!imagesLoaded) {
                 sizeImages();
-
             }
 
             int height = movieList.get(0).getImageIcon().getIconHeight() + (int) (movieList.get(0).getImageIcon().getIconHeight() * .1);
