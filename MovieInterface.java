@@ -20,6 +20,7 @@ public class MovieInterface extends javax.swing.JFrame {
     String saveDirectory = "/movie_UI/UI_saves";
     String imageSaveDirectory = "/images";
     String saveVideoFileName = "VideoFiles_UIsaver.kev";
+    String saveUIFileName = "VideoFiles_UI_UISettings.kev";
     MovieUISaver UIsaver = new MovieUISaver(saveDirectory);
     IMDB_Miner miner;
     FileLoader fileLoader;
@@ -411,6 +412,10 @@ public class MovieInterface extends javax.swing.JFrame {
         jPanelPrep.setBackground(Color.BLACK);
         jScrollPaneDisplay.setBackground(Color.RED);
     }
+    
+    public void saveUI(){
+        UIsaver.saveUIState(saveUIFileName);
+    }
 
    
     public void prepareJPanelPrep() {
@@ -717,7 +722,8 @@ public class MovieInterface extends javax.swing.JFrame {
 
         imageScale = (((jSliderImageSize.getValue() + 50) * 1.00) / 100);
         UIsaver.setImageScale(imageScale);
-        UIsaver.saveUIState(saveVideoFileName);
+        //UIsaver.saveUIState(saveUIFileName);
+        saveUI();
 
         imagesLoaded = false;
         System.out.println("Calling RUN UI from save size");
@@ -756,7 +762,8 @@ public class MovieInterface extends javax.swing.JFrame {
                 videoFileLoader.setNewPathName(fileDirectory);
                 loadVideoFiles(saveVideoFileName);
 
-                UIsaver.saveUIState(saveVideoFileName);
+                //UIsaver.saveUIState(saveUIFileName);
+                saveUI();
                 System.out.println("Calling RUN UI from directory pick");
 
             }
@@ -814,20 +821,23 @@ public class MovieInterface extends javax.swing.JFrame {
             runUICode();
             genreSelect = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
             System.out.println("genreSelect saved to variable as: " + genreSelect);
-            UIsaver.saveUIState(saveVideoFileName);
+           // UIsaver.saveUIState(saveUIFileName);
+            saveUI();
         }
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jCheckBoxMenuGenresViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuGenresViewActionPerformed
         UIsaver.setGenresView(jCheckBoxMenuGenresView.getState());
-        UIsaver.saveUIState(saveVideoFileName);
+        //UIsaver.saveUIState(saveUIFileName);
+        saveUI();
         System.out.println("RUN UI from genres View");
         runUICode();
     }//GEN-LAST:event_jCheckBoxMenuGenresViewActionPerformed
 
     private void jCheckBoxMenuPlayCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuPlayCountActionPerformed
         UIsaver.setPlayCountView(jCheckBoxMenuPlayCount.getState());
-        UIsaver.saveUIState(saveVideoFileName);
+       // UIsaver.saveUIState(saveUIFileName);
+        saveUI();
         viewCountView = jCheckBoxMenuPlayCount.getState();
         System.out.println("RUN UI from playcount view");
         runUICode();
@@ -835,7 +845,8 @@ public class MovieInterface extends javax.swing.JFrame {
 
     private void jCheckBoxMenuRatingViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuRatingViewActionPerformed
         UIsaver.setRatingsView(jCheckBoxMenuRatingView.getState());
-        UIsaver.saveUIState(saveVideoFileName);
+        //UIsaver.saveUIState(saveUIFileName);
+        saveUI();
         ratingView = jCheckBoxMenuRatingView.getState();
         System.out.println("RUN UI from Rating view");
         runUICode();
@@ -843,7 +854,8 @@ public class MovieInterface extends javax.swing.JFrame {
 
     private void jCheckBoxMenuYearsViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuYearsViewActionPerformed
         UIsaver.setYearView(jCheckBoxMenuYearsView.getState());
-        UIsaver.saveUIState(saveVideoFileName);
+        //UIsaver.saveUIState(saveUIFileName);
+        saveUI();
         yearView = jCheckBoxMenuYearsView.getState();
         System.out.println("RUN UI from Year view");
         runUICode();
@@ -851,7 +863,8 @@ public class MovieInterface extends javax.swing.JFrame {
 
     private void jCheckBoxMenuTitlesViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuTitlesViewActionPerformed
         UIsaver.setTitleView(jCheckBoxMenuTitlesView.getState());
-        UIsaver.saveUIState(saveVideoFileName);
+        //UIsaver.saveUIState(saveUIFileName);
+        saveUI();
 
         titleView = jCheckBoxMenuTitlesView.getState();
         System.out.println("RUN UI from Titles view");
