@@ -11,6 +11,7 @@ public class VideoFileLoaderSaver {
 
     private String pathName;
     IMDB_Miner miner;
+    private ProgressReporter progressWindow;
 
     public VideoFileLoaderSaver(String pathName, FileLoader fileLoader) {
         this.pathName = pathName;
@@ -66,7 +67,16 @@ public class VideoFileLoaderSaver {
         }
     }
 
+    private void updateProgress(int value) {
+        System.out.println("Video File loader, reporting progress: "+value);
+        progressWindow.updateProgressBar(value);
+    }
+
     public ArrayList<VideoFile> loadVideoFiles(String fileName) {
+
+        progressWindow = new ProgressReporter();
+        progressWindow.run();
+        progressWindow.updateText("Loading Save");
         //builds the arraylist of video files from the saved file for return
         ArrayList<String> loadedVideoFileString = new ArrayList();
         File loadFile = new File(pathName + "\\" + fileName);
@@ -101,20 +111,23 @@ public class VideoFileLoaderSaver {
         ArrayList<VideoFile> videoFilesLoaded = new ArrayList();
 
         for (int i = 0; i < fileString.size(); i += 9) {
+            updateProgress((i*100) / fileString.size());
+            if (progressWindow.stillRunning()) {
+                VideoFile file = new VideoFile(pathName, fileString.get(i).trim()); //creates a new Video file with (pathname, title)
 
-            VideoFile file = new VideoFile(pathName, fileString.get(i).trim()); //creates a new Video file with (pathname, title)
-
-            file.setPath(fileString.get(i + 1).trim());
-            file.setYear(Integer.parseInt(fileString.get(i + 2).trim() + ""));
-            file.setRating(Double.parseDouble(fileString.get(i + 3).trim()));
-            file.setPlaycount(Integer.parseInt(fileString.get(i + 4).trim()));
-            addGenresString(fileString.get(i + 5).trim(), file);
-            file.setDataGathered(Boolean.parseBoolean(fileString.get(i + 6)));
-            file.setIsMovie(Boolean.parseBoolean(fileString.get(i + 7)));
-            file.setFileSize(Integer.parseInt(fileString.get(i + 8)));
-            System.out.println("adding: " + file.getTitle());
-            videoFilesLoaded.add(file);
+                file.setPath(fileString.get(i + 1).trim());
+                file.setYear(Integer.parseInt(fileString.get(i + 2).trim() + ""));
+                file.setRating(Double.parseDouble(fileString.get(i + 3).trim()));
+                file.setPlaycount(Integer.parseInt(fileString.get(i + 4).trim()));
+                addGenresString(fileString.get(i + 5).trim(), file);
+                file.setDataGathered(Boolean.parseBoolean(fileString.get(i + 6)));
+                file.setIsMovie(Boolean.parseBoolean(fileString.get(i + 7)));
+                file.setFileSize(Integer.parseInt(fileString.get(i + 8)));
+                System.out.println("adding: " + file.getTitle());
+                videoFilesLoaded.add(file);
+            }
         }
+        progressWindow.closeWindow();
         return videoFilesLoaded;
     }
 

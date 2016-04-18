@@ -4,6 +4,7 @@ import MovieUILogic.FileLoader;
 import MovieUILogic.IMDB_Miner;
 import MovieUILogic.ImageClicker;
 import MovieUILogic.MovieUISaver;
+import MovieUILogic.ProgressReporter;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class MovieInterface extends javax.swing.JFrame {
     FileLoader fileLoader;
     VideoFileLoaderSaver videoFileLoader;
     FileListGenerator sorter;
+    static ProgressReporter progressWindow;
 
     int panelWidth;
     int panelHeight;
@@ -80,7 +82,7 @@ public class MovieInterface extends javax.swing.JFrame {
         } else {
             System.out.println("save not found");
         }
-     
+
         genreSelect = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
         sortOption = jComboBoxSorter.getItemAt(jComboBoxSorter.getSelectedIndex());
         startUIProgram();
@@ -89,6 +91,7 @@ public class MovieInterface extends javax.swing.JFrame {
 
     public void startUIProgram() {
         System.out.println("startUIProgram, loadImages");
+
         loadImages();
 
         System.out.println("startUI, genresBox");
@@ -97,6 +100,7 @@ public class MovieInterface extends javax.swing.JFrame {
         sortingCheck();
         System.out.println("startUI, runUI");
         runUICode();
+        progressWindow.closeWindow();
     }
 
     @SuppressWarnings("unchecked")
@@ -412,12 +416,11 @@ public class MovieInterface extends javax.swing.JFrame {
         jPanelPrep.setBackground(Color.BLACK);
         jScrollPaneDisplay.setBackground(Color.RED);
     }
-    
-    public void saveUI(){
+
+    public void saveUI() {
         UIsaver.saveUIState(saveUIFileName);
     }
 
-   
     public void prepareJPanelPrep() {
         jPanelPrep.setPreferredSize(new Dimension(jScrollPaneDisplay.getWidth(), jScrollPaneDisplay.getHeight()));
         jPanelPrep.setSize(jScrollPaneDisplay.getWidth(), jScrollPaneDisplay.getHeight());
@@ -561,13 +564,30 @@ public class MovieInterface extends javax.swing.JFrame {
         assignListeners();
     }
 
-    public void loadImages() {
-        System.out.println("load Images called, setting Buffered Images");
-        for (VideoFile movie : movieList) {
-            System.out.println("loadImage in main: " + movie.getTitle() + " has image: " + movie.getHasImage());
-            if (!movie.getHasImage()) {
+    public void quitProgram() {
+        System.out.println("      QUIT PROGRAM CALLED");
+        System.exit(0);
+    }
 
-                fileLoader.loadImage(movie);
+    public void loadImages() {
+
+        progressWindow.updateText("Loading Images");
+        System.out.println("load Images called, setting Buffered Images");
+        int i = 0;
+        for (VideoFile movie : movieList) {
+            if (progressWindow.stillRunning()) {
+                progressWindow.updateProgressBar((i * 100) / movieList.size());
+                System.out.println("progress Bar from Load Images, value set: " + (i * 100) / movieList.size());
+                progressWindow.updateText(movie.getTitle());
+                System.out.println("loadImage in main: " + movie.getTitle() + " has image: " + movie.getHasImage());
+                if (!movie.getHasImage()) {
+
+                    fileLoader.loadImage(movie);
+                }
+                i++;
+            } else {
+                System.out.println("calling quit from loadImages");
+                quitProgram();
             }
         }
     }
@@ -577,11 +597,19 @@ public class MovieInterface extends javax.swing.JFrame {
         System.out.println("Main, Size Images called");
         int i = 0;
         for (VideoFile movie : movieList) {
-            if (imageSizer && i > 2) {
-                break;
+            if (progressWindow.stillRunning()) {
+                progressWindow.updateProgressBar((i * 100) / movieList.size());
+                progressWindow.updateText("Sizing Images: " + movie.getTitle());
+                System.out.println("progress from Main, Size Images: " + (i * 100) / movieList.size());
+                if (imageSizer && i > 2) {
+                    break;
+                }
+                fileLoader.sizeImages(movie, imageScale);
+                i++;
+            } else {
+                System.out.println("   QUIT called from size Images, main");
+                quitProgram();
             }
-            fileLoader.sizeImages(movie, imageScale);
-            i++;
         }
     }
 
@@ -675,7 +703,7 @@ public class MovieInterface extends javax.swing.JFrame {
             }
 
             paintUIBG();
-            
+
             jPanelPrep.setPreferredSize(new Dimension(jPanelPrep.getWidth(), ((height + space) * (rowCount + 1)) + 40));
 
             fillScrollPane(jPanelPrep);
@@ -821,7 +849,7 @@ public class MovieInterface extends javax.swing.JFrame {
             runUICode();
             genreSelect = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
             System.out.println("genreSelect saved to variable as: " + genreSelect);
-           // UIsaver.saveUIState(saveUIFileName);
+            // UIsaver.saveUIState(saveUIFileName);
             saveUI();
         }
     }//GEN-LAST:event_jComboBox2ActionPerformed
@@ -836,7 +864,7 @@ public class MovieInterface extends javax.swing.JFrame {
 
     private void jCheckBoxMenuPlayCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuPlayCountActionPerformed
         UIsaver.setPlayCountView(jCheckBoxMenuPlayCount.getState());
-       // UIsaver.saveUIState(saveUIFileName);
+        // UIsaver.saveUIState(saveUIFileName);
         saveUI();
         viewCountView = jCheckBoxMenuPlayCount.getState();
         System.out.println("RUN UI from playcount view");
@@ -911,7 +939,6 @@ public class MovieInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuMovieSetupActionPerformed
 
     private void jCheckBoxMenuItemEnableEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemEnableEditActionPerformed
-        // TODO add your handling code here:
         editEnabled = jCheckBoxMenuItemEnableEdit.getState();
     }//GEN-LAST:event_jCheckBoxMenuItemEnableEditActionPerformed
 
@@ -954,39 +981,20 @@ public class MovieInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxSorterActionPerformed
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
- /*
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MovieInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MovieInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MovieInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MovieInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-         */
+        System.out.println("MAIN, first line in main");
+                progressWindow = new ProgressReporter();
+        progressWindow.run();
+        /*
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
+                System.out.println("MAIN, line after run()");
                 new MovieInterface().setVisible(true);
-
             }
-
         });
-
+        */
+        new MovieInterface().setVisible(true);
+        System.out.println("MAIN, final line in main");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
