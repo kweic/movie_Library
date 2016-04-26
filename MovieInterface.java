@@ -54,7 +54,7 @@ public class MovieInterface extends javax.swing.JFrame {
 
     public MovieInterface() {
 
-        UIsaver.loadState(saveVideoFileName);
+        UIsaver.loadState(saveUIFileName);
         fileLoader = new FileLoader(imageSaveDirectory);
         miner = new IMDB_Miner(fileLoader);
         titleView = UIsaver.getTitleViewSetting();
@@ -75,6 +75,15 @@ public class MovieInterface extends javax.swing.JFrame {
         jPanel1.setBackground(Color.GRAY);
         jScrollPaneDisplay.setBackground(Color.RED);
 
+        checkFileSave();
+
+        genreSelect = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
+        sortOption = jComboBoxSorter.getItemAt(jComboBoxSorter.getSelectedIndex());
+        startUIProgram();
+
+    }
+
+    public void checkFileSave() {
         if (fileLoader.checkForVideoFileSave(fileDirectory, saveVideoFileName)) {
             System.out.println("saved video file found.");
             loadVideoFiles(saveVideoFileName);
@@ -82,11 +91,6 @@ public class MovieInterface extends javax.swing.JFrame {
         } else {
             System.out.println("save not found");
         }
-
-        genreSelect = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
-        sortOption = jComboBoxSorter.getItemAt(jComboBoxSorter.getSelectedIndex());
-        startUIProgram();
-
     }
 
     public void startUIProgram() {
@@ -982,7 +986,7 @@ public class MovieInterface extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         System.out.println("MAIN, first line in main");
-                progressWindow = new ProgressReporter();
+        progressWindow = new ProgressReporter();
         progressWindow.run();
         /*
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -992,7 +996,7 @@ public class MovieInterface extends javax.swing.JFrame {
                 new MovieInterface().setVisible(true);
             }
         });
-        */
+         */
         new MovieInterface().setVisible(true);
         System.out.println("MAIN, final line in main");
     }

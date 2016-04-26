@@ -56,10 +56,11 @@ public class FileNameCleaner {
 
     public String doExcludes(String input) {
         String checkTitle = input;
+        
         for (int i = 0; i < excludeString.size(); i++) {
             //System.out.println("removing: " + excludeString.get(i));
             checkTitle = checkTitle.replace(excludeString.get(i).toLowerCase(), "");
-            //System.out.println("new check: " + checkTitle);
+            
         }
         return checkTitle;
     }
@@ -122,15 +123,21 @@ public class FileNameCleaner {
     public String capitalizeFirst(String input) {
         //System.out.println("capitalizing first");
         Scanner reader = new Scanner(input);
-        String capitalized = "";
+        //String capitalized = "";
+        StringBuilder capitalized = new StringBuilder();
         String nextInput;
         while (reader.hasNext()) {
             nextInput = reader.next();
             if (possibleWord(nextInput)) {
                 if (checkFirstLetter(nextInput)) { //if the first char is a letter, capitalized it
-                    capitalized += (nextInput.charAt(0) + "").toUpperCase() + nextInput.substring(1, nextInput.length()) + " ";
+                    //capitalized += (nextInput.charAt(0) + "").toUpperCase() + nextInput.substring(1, nextInput.length()) + " ";
+                    capitalized.append((nextInput.charAt(0)+"").toUpperCase());
+                    capitalized.append(nextInput.substring(1, nextInput.length()));
+                    capitalized.append(" ");
                 } else {
-                    capitalized += nextInput + " ";
+                    //capitalized += nextInput + " ";
+                    capitalized.append(nextInput);
+                    capitalized.append(" ");
                 }
             }
         }
@@ -194,36 +201,44 @@ public class FileNameCleaner {
     public String getFileName(String filePath) {
         //go from the back and stop building file at first backslash
 
-        String cleanedFile = "";
-
+        //String cleanedFile = "";
+        StringBuilder cleanedFile = new StringBuilder();
+        
         int i = filePath.length() - 1;
         while (filePath.charAt(i) != '\\') {
             // System.out.println("char at: "+parentFolder.charAt(i));
-            cleanedFile = filePath.charAt(i) + "" + cleanedFile;
+            //cleanedFile = filePath.charAt(i) + "" + cleanedFile;
+            
+            //if it's breaking check here.. 4/25 7:53
+            cleanedFile.insert(0, filePath.charAt(i));
             i--;
         }
-        return cleanedFile;
+        return cleanedFile.toString();
     }
 
     public String getFileWithParent(String input) {
         int slashCount = 0;
-        String cleanedString = "";
+        //String cleanedString = "";
+        StringBuilder cleanedString = new StringBuilder();
         for (int i = input.length() - 1; slashCount < 2; i--) {
             if (input.charAt(i) == '\\' || input.charAt(i) == '/') {
                 slashCount++;
             } else if (i == 0) {
                 return input;
             }
-            cleanedString = input.charAt(i) + "" + cleanedString;
+            //cleanedString = input.charAt(i) + "" + cleanedString;
+            //check here if breaking..
+            cleanedString.insert(0, input.charAt(i));
         }
-        return cleanedString;
+        return cleanedString.toString();
     }
 
     public String getParentFolder(String pathName) {
         //System.out.println("  getting parent from: "+pathName);
-        String parentFolder = pathName.replace("\\" + getFileName(pathName), ""); //remove the fileName
-        String cleanedFile = "";
-        parentFolder = parentFolder.toLowerCase();
+        String parentFolder = pathName.replace("\\" + getFileName(pathName), "").toLowerCase(); //remove the fileName
+        //String cleanedFile = "";
+        StringBuilder cleanedFile = new StringBuilder();
+        //parentFolder = parentFolder.toLowerCase();
 
         if(parentFolder.length() == 0){
             return pathName;
@@ -231,7 +246,8 @@ public class FileNameCleaner {
         int i = parentFolder.length() - 1;
         while (parentFolder.charAt(i) != '\\') {
             // System.out.println("char at: "+parentFolder.charAt(i));
-            cleanedFile = parentFolder.charAt(i) + "" + cleanedFile;
+            //cleanedFile = parentFolder.charAt(i) + "" + cleanedFile;
+            cleanedFile.insert(0, parentFolder.charAt(i));
             i--;
             if (i == 1) {
                 System.out.println("reached 1");
@@ -240,7 +256,7 @@ public class FileNameCleaner {
                 System.out.println("readed 0");
             }
         }
-        return cleanedFile;
+        return cleanedFile.toString();
     }
 
 }

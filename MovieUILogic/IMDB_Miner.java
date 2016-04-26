@@ -53,16 +53,19 @@ public class IMDB_Miner {
 
     public String convertTitle(String title) {
         //adds seperation with + to title like imdb prefers
-        String rebuildTitle = "";
+        //String rebuildTitle = "";
+        StringBuilder rebuildTitle = new StringBuilder();
         for (int i = 0; i < title.length(); i++) {
             if (title.charAt(i) == ' ') {
-                rebuildTitle += "+";
+               // rebuildTitle += "+";
+                rebuildTitle.append("+");
             } else {
-                rebuildTitle += title.charAt(i);
+                rebuildTitle.append(title.charAt(i));
+                //rebuildTitle += title.charAt(i);
             }
         }
         System.out.println("returning: " + rebuildTitle);
-        return rebuildTitle;
+        return rebuildTitle.toString();
     }
 
     public void gatherIMDBData(VideoFile videofile) {
@@ -237,16 +240,18 @@ public class IMDB_Miner {
 
     public String cropLink(String originalImageLink) {
         System.out.println("cropping: " + originalImageLink);
-        String croppedLink = "";
+        //String croppedLink = "";
+        StringBuilder croppedLink = new StringBuilder();
         for (int i = 0; i < originalImageLink.length(); i++) {
-            croppedLink += originalImageLink.charAt(i);
+            //croppedLink += originalImageLink.charAt(i);
+            croppedLink.append(originalImageLink.charAt(i));
             if (originalImageLink.substring(i, i + 3).equals("_V1")) {
                 //System.out.println("checking: " + originalImageLink.substring(i, i+3));
                 break;
             }
         }
         System.out.println("returning cropped link: " + croppedLink);
-        return croppedLink;
+        return croppedLink.toString();
     }
 
     public BufferedImage getImage(String fileLink) {
