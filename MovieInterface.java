@@ -949,10 +949,18 @@ public class MovieInterface extends javax.swing.JFrame {
     private void jMenuDownloadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDownloadDataActionPerformed
         //does the IMDB scraping for movieList
         fileLoader.setIMDBMiner(miner);
-
+        //progressWindow = new ProgressReporter();
+        progressWindow.run();
+        int i = 0;
         for (VideoFile movie : movieList) {
-            miner.gatherIMDBData(movie);
+            if (progressWindow.stillRunning()) {
+                progressWindow.updateProgressBar((i * 100) / movieList.size());
+                progressWindow.updateText("Gathering Data: "+movie.getTitle());
+                miner.gatherIMDBData(movie);
+            }
         }
+        progressWindow.closeWindow();
+
         imagesLoaded = false;
         videoFileLoader.saveVideoFiles(movieList, saveVideoFileName, fileDirectory);
         System.out.println("Calling RUN UI from jMenuDownloadDataAction");
